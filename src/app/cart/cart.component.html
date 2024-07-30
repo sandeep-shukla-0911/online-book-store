@@ -1,0 +1,28 @@
+<div class="container p-4">
+    <h1 class="align-center">All your books in cart</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @for(books of allCartItems; track books){
+            <div class="col-xs-12 col-sm-12 card p-5 m-5" style="width: 18rem;">
+                <img src="../../assets/1.jpg" class="card-img-top" alt="{{ books?.item?.title }}">
+                <div class="card-body p-2 m-2">
+                    <h5 class="card-title">{{ books?.item?.title }}</h5>
+                    <p class="card-text">{{ books?.item?.description }}</p>
+                    <p class="card-text">{{ books?.item?.category }}</p>
+                    <p class="card-text">{{ books?.item?.author }}</p>
+                    <p class="card-text">Price: ₹ {{ books?.item?.price }}</p>
+                </div>
+            </div>
+        } @empty{
+            <p>Nothing in your cart</p>
+        }
+    </div>
+    <div class="row m-2 pl-2" *ngIf="allCartItems?.length">
+        <div class="col-xs-12 col-sm-12">
+            <h3>Total Price: ₹ {{ totalPrice }}</h3>
+            <button class="btn btn-primary" (click)="Checkout()">Checkout</button>
+        </div>
+    </div>
+</div>

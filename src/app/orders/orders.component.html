@@ -1,0 +1,78 @@
+<div class="container p-4">
+    <h1 class="align-center">You can view all your orders</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        @for(orders of allOrders; track $index){
+            <div class="accordion accordion-flush" id="accordionAllOrders">
+                <div class="accordion-item m-2">
+                    <h2 class="accordion-header" id="flush-heading-{{$index}}">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" attr.data-bs-target="#flush-collapse-{{$index}}" aria-expanded="false" attr.aria-controls="flush-collapse-{{$index}}">
+                        Order #{{orders.orderId}}
+                      </button>
+                    </h2>
+                    <div id="flush-collapse-{{$index}}" class="accordion-collapse collapse" attr.aria-labelledby="flush-heading-{{$index}}" data-bs-parent="#accordionAllOrders">
+                        <div class="accordion-body">
+                            <div class="">
+                                <h5>Order Date: {{orders.orderDate | date:'mediumDate' }}</h5>
+                                <h5>Delivery Date: {{orders.deliveryDate | date:'mediumDate'}}</h5>
+                                <h5>Total Amount: ₹{{orders.totalAmount}}</h5>
+                                <h5>Address :</h5>
+                                <p>{{orders.deliveryAddress?.addressLine1 }}, {{orders.deliveryAddress?.addressLine2 }}, 
+                                    {{orders.deliveryAddress?.city }}, {{orders.deliveryAddress?.region }}, {{orders.deliveryAddress?.country }}
+                                    - {{orders.deliveryAddress?.zipCode }}
+                                </p>
+                                <p>Phone: <a href="tel:{{orders.deliveryAddress?.mobile}}">{{orders.deliveryAddress?.mobile }}</a></p>
+                                <p>Email: <a href="mailto:{{orders.deliveryAddress?.email}}">{{orders.deliveryAddress?.email}}</a></p>
+                            </div>
+                            @for(orderItemDetails of orders.orderItems; track $index){
+                                <div class="col-md-4 card p-1 m-2" style="width: 18rem;">
+                                    <img src="../../assets/1.jpg" class="card-img-top" alt="{{ orderItemDetails.title }}">
+                                    <div class="card-body p-2 m-2">
+                                        <h5 class="card-title">{{ orderItemDetails.title }}</h5>
+                                        <p class="card-text">{{ orderItemDetails.description }}</p>
+                                        <p class="card-text">{{ orderItemDetails.category }}</p>
+                                        <p class="card-text">{{ orderItemDetails.author }}</p>
+                                        <p class="card-text">Price: ₹ {{ orderItemDetails.price }}</p>
+                                    </div>
+                                </div>
+                            }
+                            <!-- <div>
+                                <h5>Address</h5><br/>
+                                <p>{{orders.deliveryAddress.addressLine1}}</p>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-heading-{{$index}}">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-{{$index}}" aria-expanded="false" aria-controls="flush-collapse-{{$index}}">
+                        Accordion Item #{{$index}}
+                      </button>
+                    </h2>
+                    <div id="flush-collapse-{{$index}}" class="accordion-collapse collapse" aria-labelledby="flush-heading-{{$index}}" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                    </div>
+                  </div>
+            </div> -->
+            <!-- <div class="col card p-5 m-5" style="width: 18rem;">
+                <img src="../../assets/1.jpg" class="card-img-top" alt="{{ books.title }}">
+                <div class="card-body p-2 m-2">
+                    <h5 class="card-title">{{ books.title }}</h5>
+                    <p class="card-text">{{ books.description }}</p>
+                    <p class="card-text">{{ books.category }}</p>
+                    <p class="card-text">{{ books.author }}</p>
+                    <p class="card-text">Price: ₹ {{ books.price }}</p>
+                    <a href="javascript:none()" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div> -->
+        } @empty{
+            <p>No Orders found</p>
+        }
+    </div>
+
+</div>
