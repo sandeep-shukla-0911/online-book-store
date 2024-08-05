@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
                     });
                 },
                 error: (error: any) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, { autoClose: true });
                     this.loading = false;
                 }
             });

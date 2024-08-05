@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { BaseService } from '@app/core/services/base.service';
+import { BOOK_STORE_GLOBAL_CONSTANTS } from '@app/_shared/constants';
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +20,7 @@ export class AccountService extends BaseService{
         private httpClient: HttpClient
     ) {
         super(httpClient);
-        this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
+        this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem(BOOK_STORE_GLOBAL_CONSTANTS.USER_KEY)!));
         this.user = this.userSubject.asObservable();
     }
 
@@ -31,7 +32,7 @@ export class AccountService extends BaseService{
         return this.basePost<User>(`${environment.apiUrl}/account/login`, { username, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem(BOOK_STORE_GLOBAL_CONSTANTS.USER_KEY, JSON.stringify(user));
                 this.userSubject.next(user);
                 return user;
             }));
@@ -39,7 +40,7 @@ export class AccountService extends BaseService{
 
     logout() {
         // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
+        localStorage.removeItem(BOOK_STORE_GLOBAL_CONSTANTS.USER_KEY);
         this.userSubject.next(null);
         this.router.navigate(['/account/login']);
     }

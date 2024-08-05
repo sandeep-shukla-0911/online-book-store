@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { User, Cart, Checkout } from '@app/_models';
 
 import { AccountService, AlertService, CartService, CheckoutService } from '@app/_services';
+import { MESSAGES } from '@app/_shared/constants';
 import { first, Subscription } from 'rxjs';
 
 @Component({ templateUrl: 'cart.component.html' })
@@ -41,11 +42,11 @@ export class CartComponent implements OnInit, OnDestroy {
     } as Checkout
 
     this.checkoutService.checkout(checkout).subscribe(response => {
-      if(response && response?.result === "success"){
+      if(response && response?.result === MESSAGES.Success) {
         this.cartService.removeItemsFromCart();
         this.allCartItems = [];
       }
-      this.alertService.success(response.message);
+      this.alertService.success(response.message, { autoClose: true });
     });
   }
 

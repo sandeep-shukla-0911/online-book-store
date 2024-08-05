@@ -11,6 +11,7 @@ import { AccountService } from './account.service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService extends BaseService{
+    private readonly CART_ITEMS : string = 'cartItems';
     private cartSubject: BehaviorSubject<Cart[] | null>;
     public cart: Observable<Cart[] | null>;
     public user: User | null = null;
@@ -23,7 +24,7 @@ export class CartService extends BaseService{
         super(httpClient);
         this.user = this.accountService.userValue;
 
-        this.cartSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('cartItems')!));
+        this.cartSubject = new BehaviorSubject(JSON.parse(localStorage.getItem(this.CART_ITEMS)!));
         this.cart = this.cartSubject.asObservable();
     }
 
@@ -33,27 +34,27 @@ export class CartService extends BaseService{
 
     addItemsToCart(cartItems: Cart) {
         // check if already items exist in cart
-        var existingCart : Cart[] = JSON.parse(localStorage.getItem('cartItems')!);
+        var existingCart : Cart[] = JSON.parse(localStorage.getItem(this.CART_ITEMS)!);
         if(existingCart && existingCart.length > 0) {
             existingCart.push(cartItems);
-            localStorage.setItem('cartItems', JSON.stringify(existingCart));
+            localStorage.setItem(this.CART_ITEMS, JSON.stringify(existingCart));
             this.cartSubject.next(existingCart);
         } else {
             var newCartItems: Cart[] = [];
             newCartItems.push(cartItems);
-            localStorage.setItem('cartItems', JSON.stringify(newCartItems));
+            localStorage.setItem(this.CART_ITEMS, JSON.stringify(newCartItems));
             this.cartSubject.next(newCartItems);
         }
     }
 
     removeItemsFromCart() {
         // check if already items exist in cart
-        var existingCart : Cart[] = JSON.parse(localStorage.getItem('cartItems')!);
+        var existingCart : Cart[] = JSON.parse(localStorage.getItem(this.CART_ITEMS)!);
         if(existingCart && existingCart.length > 0) {
             //fetch all items from cart except the current user
             var existingCartItemsForAllOtherUsers = existingCart.filter(x => x.userId !== this.user?.id);
             //update the cart items in local storage
-            localStorage.setItem('cartItems', JSON.stringify(existingCartItemsForAllOtherUsers));
+            localStorage.setItem(this.CART_ITEMS, JSON.stringify(existingCartItemsForAllOtherUsers));
             this.cartSubject.next(existingCart);
         } else {
             this.cartSubject.next(null);
@@ -61,8 +62,7 @@ export class CartService extends BaseService{
     }
 
     getAllCartItems() {
-        console.log('getAllCartItems')
-        var existingCart : Cart[] = JSON.parse(localStorage.getItem('cartItems')!);
+        var existingCart : Cart[] = JSON.parse(localStorage.getItem(this.CART_ITEMS)!);
         if(existingCart){
             // return all cart items for current user
             return existingCart.filter(x => x.userId === this.user?.id);

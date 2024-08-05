@@ -3,6 +3,7 @@
 import { Books, Cart, User } from '@app/_models';
 import { AccountService, AlertService, CartService } from '@app/_services';
 import { BooksService } from '@app/_services';
+import { MESSAGES } from '@app/_shared/constants';
 import { first, Subscription } from 'rxjs';
 
 @Component({ templateUrl: 'books.component.html' })
@@ -38,7 +39,7 @@ export class BooksComponent implements OnInit, OnDestroy {
       item : book
     } as Cart
     this.cartService.addItemsToCart(cart);
-    this.alertService.success('Item added to cart successfully');
+    this.alertService.success(MESSAGES.BOOK_ADDED_TO_CART, { autoClose: true });
   }
 
   ngOnDestroy() {

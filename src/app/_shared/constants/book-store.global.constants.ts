@@ -1,3 +1,5 @@
 export const BOOK_STORE_GLOBAL_CONSTANTS = { 
     APPLICATION_NAME: 'Online_Book_Store',
+    RETRY_REQUEST_COUNT_WHEN_UNAUTHORIZED : 2,
+    USER_KEY: 'user',
 }

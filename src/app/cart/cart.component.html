@@ -1,11 +1,11 @@
-<div class="container p-4">
-    <h1 class="align-center">All your books in cart</h1>
+<div class="container p-4 mt-5">
+    <h3 class="align-center">Your cart, all books added will appear here</h3>
 </div>
 
 <div class="container">
     <div class="row">
         @for(books of allCartItems; track books){
-            <div class="col-xs-12 col-sm-12 card p-5 m-5" style="width: 18rem;">
+            <div class="col-xs-12 col-sm-12 card p-3 m-3" style="width: 18rem;">
                 <img src="../../assets/1.jpg" class="card-img-top" alt="{{ books?.item?.title }}">
                 <div class="card-body p-2 m-2">
                     <h5 class="card-title">{{ books?.item?.title }}</h5>
