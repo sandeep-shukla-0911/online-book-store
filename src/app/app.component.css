@@ -1,0 +1,12 @@
+.custom-cart{
+    color: white;
+    border: 1px solid;
+    border-radius: 13px;
+    top: 3px;
+    position: fixed !important;
+    right: 44px;
+    top: 12px;
+}
+.custom-cart >i {
+    font-size: larger;
+}

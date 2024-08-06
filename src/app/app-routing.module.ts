@@ -11,9 +11,9 @@ const cartModule = () => import('./cart/cart.module').then(x => x.CartModule);
 const routes: Routes = [
   { path: '', loadChildren: HomeModule, canActivate: [AuthGuard] },
   { path: 'account', loadChildren: accountModule },
-  { path: 'books', loadChildren: booksModule },
-  { path: 'orders', loadChildren: ordersModule },
-  { path: 'cart', loadChildren: cartModule },
+  { path: 'books', loadChildren: booksModule ,canActivate: [AuthGuard]},
+  { path: 'orders', loadChildren: ordersModule ,canActivate: [AuthGuard]},
+  { path: 'cart', loadChildren: cartModule ,canActivate: [AuthGuard]},
   // otherwise redirect to home
   { path: '**', redirectTo: '', canActivate: [AuthGuard] }
 ];

@@ -4,9 +4,9 @@
       <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
       <a class="nav-item nav-link" routerLink="/books" routerLinkActive="active">Books</a>
       <a class="nav-item nav-link" routerLink="/orders" routerLinkActive="active">My Orders</a>
-      <a class="btn btn-link nav-item nav-link" (click)="logout()">Logout</a>
-      <a routerLink="/cart" routerLinkActive="active" class="btn btn-secondary position-relative">
-        Cart 
+      <a class="btn nav-item nav-link" (click)="logout()">Logout</a>
+      <a routerLink="/cart" routerLinkActive="active" class="btn custom-cart position-relative">
+        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" *ngIf="allCartItems?.length">
           {{allCartItems?.length}}
         </span>
